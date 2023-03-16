@@ -21,7 +21,7 @@
 #include "Updater.h"
 #include "../util/numerics.h"
 
-
+#include <numeric>
 namespace RVIO2
 {
 

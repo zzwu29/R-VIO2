@@ -23,6 +23,8 @@
 #include <ros/package.h>
 #include <sensor_msgs/Image.h>
 
+#include <numeric>
+
 #include "Tracker.h"
 #include "../util/numerics.h"
 
