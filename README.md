@@ -39,6 +39,15 @@ Download and install instructions can be found at: http://opencv.org. **Tested w
 
 
 ## 2. Build and Run
+### Create workspace directory "workspace"
+  ```
+  mkdir -p ~/workspace/catkin_ws/src/
+  cd -p ~/workspace/catkin_ws/src/
+  git clone https://github.com/zzwu29/R-VIO2.git
+  cd ..
+  catkin build
+  ```
+
 First `git clone` the repository and `catkin_make` it. Especially, `rvio2_mono` is used to run with rosbag in real time, while `rvio2_mono_eval` is used for evaluation purpose which preloads the rosbag and reads it as a txt file. A config file and a launch file are required for running R-VIO2 (for example, `rvio2_euroc.yaml` and `euroc.launch` are for [EuRoC](https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets) dataset). The default mode is VIO, while you can switch to SLAM mode by setting the maximum number of SLAM features to nonzero from the config file (see `rvio2_euroc.yaml`). To visualize the outputs, please use `rviz`.
 #### Start ROS:
   ```
