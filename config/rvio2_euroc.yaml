@@ -82,7 +82,10 @@ Camera.nTimeOffset: 0
 INI.nTimeskip: 0 # MH_01:40, MH_02:28, MH_03:15, MH_04:12, MH_05:15
 
 # Record the result or not
-INI.RecordOutputs: 0
+INI.RecordOutputs: 1 # "stamped_traj_estimate.txt" in path "R-VIO2"
+
+# Record the result or not
+INI.RecordCalibOutputs: 1 # "stamped_calib_estimate.txt" in path "R-VIO2"
 
 # Use gravity alignment or not
 INI.EnableAlignment: 1
@@ -114,7 +117,7 @@ Tracker.nQualLvl: 1e-2
 Tracker.nMinDist: 15
 
 # Max. number of SLAM features (VIO:0, SLAM:50)
-Tracker.nMaxSlamPoints: 0
+Tracker.nMaxSlamPoints: 0 # !!! mode switch (VIO/VI-SLAM)
 
 # Parallax of good feature [deg] (only for SLAM)
 Tracker.nGoodParallax: 5
@@ -144,13 +147,13 @@ Tracker.nAlgebraicErrThrd: 1e-3
 #--------------------------------------------------------------------------------------------
 
 # Display feature tracking
-Displayer.ShowTrack: 1
+Displayer.ShowTrack: 1 # rviz
 
 # Display feature redetection
-Displayer.ShowNewer: 0
+Displayer.ShowNewer: 0 # rviz
 
 # Size of point
-Displayer.nLandmarkScale: 0.03
+Displayer.nLandmarkScale: 0.1 # point size in visualization window
 
 # Publishing rate
 Displayer.nLandmarkPubRate: 5

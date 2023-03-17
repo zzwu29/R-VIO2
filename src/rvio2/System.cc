@@ -41,6 +41,7 @@ int nImageId = 0;
 nav_msgs::Path path;
 
 std::ofstream fPoseResults;
+std::ofstream fPoseCalibResults;
 
 
 System::System(const std::string& strSettingsFile)
@@ -55,6 +56,9 @@ System::System(const std::string& strSettingsFile)
 
     const int bRecordOutputs = fsSettings["INI.RecordOutputs"];
     mbRecordOutputs = bRecordOutputs;
+
+    const int bRecordCalibOutputs = fsSettings["INI.RecordCalibOutputs"];
+    mbRecordCalibOutputs = bRecordCalibOutputs;
 
     const int bEnableAlignment = fsSettings["INI.EnableAlignment"];
     mbEnableAlignment = bEnableAlignment;
@@ -110,7 +114,17 @@ System::System(const std::string& strSettingsFile)
     if (mbRecordOutputs)
     {
         std::string pkg_path = ros::package::getPath("rvio2");
+
         fPoseResults.open(pkg_path+"/stamped_traj_estimate.txt", std::ofstream::out);
+        fPoseResults << "# t pG_k_x pG_k_y pG_k_z qk_G_x qk_G_y qk_G_z qk_G_w" << std::endl;
+    }
+
+    if (mbRecordCalibOutputs)
+    {
+        std::string pkg_path = ros::package::getPath("rvio2");
+
+        fPoseCalibResults.open(pkg_path+"/stamped_calib_estimate.txt", std::ofstream::out);
+        fPoseCalibResults << "# t pc_i_x pc_i_y pc_i_z qc_i_x qc_i_y qc_i_z qc_i_w dtc_i" << std::endl;
     }
 }
 
@@ -282,6 +296,17 @@ bool System::initialize(const ImageData& Image, const std::vector<ImuData>& vImu
                      << qkG(0) << " " << qkG(1) << " " << qkG(2) << " " << qkG(3) << std::endl;
     }
 
+    if (mbRecordCalibOutputs)
+    {
+        Eigen::Vector4f qci = RotToQuat(mRci);
+        Eigen::Vector3f pci = mtci;
+
+        fPoseCalibResults << std::setprecision(19) << im_last_timestamp << " "
+                     << pci(0) << " " << pci(1) << " " << pci(2) << " "
+                     << qci(0) << " " << qci(1) << " " << qci(2) << " " << qci(3) << mnCamTimeOffset << std::endl;
+    }
+
+
     // Start tracker
     Eigen::Matrix3f RcG = mRci*QuatToRot(Localx.head(4));
     Eigen::Vector3f tcG = mRci*Localx.segment(4,3)+mtci;
@@ -357,6 +382,13 @@ void System::run()
     ROS_INFO("T_CI: %.6f %.6f %.6f %.6f %.6f %.6f %.6f", Localx(14), Localx(15), Localx(16), 
                                                          Localx(10), Localx(11), Localx(12), Localx(13));
     ROS_INFO("td: %.6f\n", mnCamTimeOffset);
+
+    if (mbRecordCalibOutputs)
+    {
+        fPoseCalibResults << std::setprecision(19) << pMeasurements.first.Timestamp << " "
+                     << mtci(0) << " " << mtci(1) << " " << mtci(2) << " "
+                     << Localx(10) << " " << Localx(11) << " " << Localx(12) << " " << Localx(13) << mnCamTimeOffset << std::endl;
+    }
 
     // Broadcast tf
     geometry_msgs::TransformStamped transformStamped;

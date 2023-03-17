@@ -81,6 +81,7 @@ protected:
 private:
 
     bool mbRecordOutputs;
+    bool mbRecordCalibOutputs;
 
     bool mbEnableAlignment;
     bool mbUseGroundTruthCalib;
