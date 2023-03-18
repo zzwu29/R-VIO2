@@ -303,7 +303,7 @@ bool System::initialize(const ImageData& Image, const std::vector<ImuData>& vImu
 
         fPoseCalibResults << std::setprecision(19) << im_last_timestamp << " "
                      << pci(0) << " " << pci(1) << " " << pci(2) << " "
-                     << qci(0) << " " << qci(1) << " " << qci(2) << " " << qci(3) << mnCamTimeOffset << std::endl;
+                     << qci(0) << " " << qci(1) << " " << qci(2) << " " << qci(3) << " "<< mnCamTimeOffset << std::endl;
     }
 
 
@@ -387,7 +387,7 @@ void System::run()
     {
         fPoseCalibResults << std::setprecision(19) << pMeasurements.first.Timestamp << " "
                      << mtci(0) << " " << mtci(1) << " " << mtci(2) << " "
-                     << Localx(10) << " " << Localx(11) << " " << Localx(12) << " " << Localx(13) << mnCamTimeOffset << std::endl;
+                     << Localx(10) << " " << Localx(11) << " " << Localx(12) << " " << Localx(13) <<"" << mnCamTimeOffset << std::endl;
     }
 
     // Broadcast tf

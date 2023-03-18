@@ -1,0 +1,182 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# IMU Parameters (cf. VIRAL dataset)
+#--------------------------------------------------------------------------------------------
+
+# IMU data rate
+# IMU.dps: 385
+IMU.dps: 100
+
+# IMU data topic (new add)
+# IMU.topic: /imu/imu
+IMU.topic: /os1_cloud_node1/imu
+
+# IMU sensor noise
+# --euroc(/imu/imu)--
+# IMU.sigma_g: 1.6968e-04 # NOT USE ?
+# IMU.sigma_wg: 1.9393e-05
+# IMU.sigma_a: 2.0000e-3
+# IMU.sigma_wa: 3.0000e-3
+# --fast-lio(/os1_cloud_node1/imu)--
+IMU.sigma_g: 0.001 # NOT USE ?
+IMU.sigma_wg: 0.0001 
+IMU.sigma_a: 0.01
+IMU.sigma_wa: 0.01 
+
+# Gravity
+IMU.nG: 9.81
+
+# Threshold of small angle [rad] (<.1deg)
+IMU.nSmallAngle: 0.001745329
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters (cf. VIRAL dataset)
+#--------------------------------------------------------------------------------------------
+
+# Camera frame rate
+Camera.fps: 10
+
+# Camera topic (new add)
+Camera.topic: /left/image_raw
+
+# Camera image resolution
+Camera.width: 752
+Camera.height: 480
+
+# Is RGB or not
+Camera.RGB: 0
+
+# Is fisheye or not
+Camera.Fisheye: 0
+
+# Camera intrinsics
+Camera.fx: 4.250258563372763e+02
+Camera.fy: 4.267976260903337e+02
+Camera.cx: 3.860151866550880e+02
+Camera.cy: 2.419130336743440e+02
+
+Camera.k1: -0.288105327549552
+Camera.k2:  0.074578284234601
+Camera.p1:  7.784489598138802e-04
+Camera.p2: -2.277853975035461e-04
+
+# Camera image noise (1/f)
+Camera.sigma_px: 0.002318376
+Camera.sigma_py: 0.002310788
+
+# Camera extrinsics [B:IMU,C0:cam0]
+# up-B, down-C
+Camera.T_BC0_GT: !!opencv-matrix # Ground truth
+    rows: 4
+    cols: 4
+    dt: d
+    # # /imu/imu
+    # data: [   0.02183084, -0.01312053,  0.99967558,  0.00552943,
+    #           0.99975965,  0.00230088, -0.02180248, -0.12431302,
+    #          -0.00201407,  0.99991127,  0.01316761,  0.01614686,
+    #           0.00000000,  0.00000000,  0.00000000,  1.00000000]
+
+    # /os1_cloud_node1/imu
+    data: [    0.021831,   -0.013121,     0.99968,   0.055529,
+                0.99976,   0.0023009,   -0.021802,   -0.12431,
+             -0.0020141,     0.99991,    0.013168,  -0.038853,
+              0.0000000,  0.00000000,  0.00000000,  1.0000000]
+
+Camera.T_BC0: !!opencv-matrix # Approximate
+    rows: 4
+    cols: 4
+    dt: d
+    # /imu/imu
+    data: [0.0,  0.0, 1.0, 0.0,
+           1.0,  0.0, 0.0, 0.0,
+           0.0,  1.0, 0.0, 0.0,
+           0.0,  0.0, 0.0, 1.0]
+
+# Time shift from camera to IMU [s] (t_imu=t_cam+offset)
+Camera.nTimeOffset_GT: 0
+Camera.nTimeOffset: 0
+
+#--------------------------------------------------------------------------------------------
+# Initialization Parameters (tunable)
+#--------------------------------------------------------------------------------------------
+
+# Skip the "wiggling" phase [s]
+INI.nTimeskip: 0 # MH_01:40, MH_02:28, MH_03:15, MH_04:12, MH_05:15
+
+# Record the result or not
+INI.RecordOutputs: 1 # "stamped_traj_estimate.txt" in path "R-VIO2"
+
+# Record the result or not
+INI.RecordCalibOutputs: 1 # "stamped_calib_estimate.txt" in path "R-VIO2"
+
+# Use gravity alignment or not
+INI.EnableAlignment: 1
+
+# Use ground truth for calibration or not
+INI.UseGroundTruthCalib: 1
+
+# Thresholds for moving detection [deg,m]
+INI.nAngleThrd: 0.3
+INI.nLengthThrd: 0.01
+
+#--------------------------------------------------------------------------------------------
+# Tracker Parameters (tunable)
+#--------------------------------------------------------------------------------------------
+
+# Number of features per image
+Tracker.nFeatures: 200
+
+# Min. tracking length
+Tracker.nMinTrackingLength: 3
+
+# Max. tracking length
+Tracker.nMaxTrackingLength: 15
+
+# Quality level of features
+Tracker.nQualLvl: 1e-2
+
+# Min. distance between two features
+Tracker.nMinDist: 15
+
+# Max. number of SLAM features (VIO:0, SLAM:50)
+Tracker.nMaxSlamPoints: 0 # !!! mode switch (VIO/VI-SLAM)
+
+# Parallax of good feature [deg] (only for SLAM)
+Tracker.nGoodParallax: 5
+
+# Block size of image grid
+Tracker.nBlockSizeX: 150
+Tracker.nBlockSizeY: 120
+
+# Use image filter or not
+Tracker.EnableFilter: 0
+
+# Use histogram equalizer or not
+Tracker.EnableEqualizer: 1
+
+# Number of iterations (RANSAC)
+Tracker.nRansacIter: 16
+
+# Use Sampson error or not (RANSAC)
+Tracker.UseSampson: 1
+
+# Error thresholds for inlier (RANSAC)
+Tracker.nSampsonErrThrd: 1e-6
+Tracker.nAlgebraicErrThrd: 1e-3
+
+#--------------------------------------------------------------------------------------------
+# Displayer Parameters (tunable)
+#--------------------------------------------------------------------------------------------
+
+# Display feature tracking
+Displayer.ShowTrack: 1 # rviz
+
+# Display feature redetection
+Displayer.ShowNewer: 0 # rviz
+
+# Size of point
+Displayer.nLandmarkScale: 0.1 # point size in visualization window
+
+# Publishing rate
+Displayer.nLandmarkPubRate: 5

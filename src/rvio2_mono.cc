@@ -103,6 +103,33 @@ void ImuGrabber::GrabImu(const sensor_msgs::ImuConstPtr& msg)
     mpSys->PushImuData(pData);
 }
 
+std::string GetImuTopic(const std::string& strSettingsFile)
+{
+    // Read settings file
+    cv::FileStorage fsSettings(strSettingsFile, cv::FileStorage::READ);
+    if (!fsSettings.isOpened())
+    {
+       ROS_ERROR("Failed to open settings file at: %s", strSettingsFile.c_str());
+       exit(-1);
+    }
+
+    std::string s = fsSettings["IMU.topic"];
+    return s;
+}
+
+std::string GetCameraTopic(const std::string& strSettingsFile)
+{
+    // Read settings file
+    cv::FileStorage fsSettings(strSettingsFile, cv::FileStorage::READ);
+    if (!fsSettings.isOpened())
+    {
+       ROS_ERROR("Failed to open settings file at: %s", strSettingsFile.c_str());
+       exit(-1);
+    }
+
+    std::string s = fsSettings["Camera.topic"];
+    return s;
+}
 
 int main(int argc, char **argv)
 {
@@ -116,8 +143,22 @@ int main(int argc, char **argv)
     ImuGrabber igb2(&Sys);
 
     ros::NodeHandle nodeHandler;
-    ros::Subscriber imu_sub = nodeHandler.subscribe("/imu0", 100, &ImuGrabber::GrabImu, &igb2);
-    ros::Subscriber image_sub = nodeHandler.subscribe("/cam0/image_raw", 1, &ImageGrabber::GrabImage, &igb1);
+
+    std::string ImuTopic, CameraTopic;
+    if((ImuTopic=GetImuTopic(argv[1])).empty())
+    {
+        ImuTopic="/imu0";
+    }
+    if((CameraTopic=GetCameraTopic(argv[1])).empty())
+    {
+        CameraTopic="/cam0/image_raw";
+    }
+
+    std::cout<<"ImuTopic: "<<ImuTopic<<std::endl;
+    std::cout<<"CameraTopic: "<<CameraTopic<<std::endl;
+
+    ros::Subscriber imu_sub = nodeHandler.subscribe(ImuTopic, 100, &ImuGrabber::GrabImu, &igb2);
+    ros::Subscriber image_sub = nodeHandler.subscribe(CameraTopic, 1, &ImageGrabber::GrabImage, &igb1);
 
     ros::spin();
 
