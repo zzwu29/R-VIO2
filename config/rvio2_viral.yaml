@@ -13,16 +13,17 @@ IMU.dps: 100
 IMU.topic: /os1_cloud_node1/imu
 
 # IMU sensor noise
-# --euroc(/imu/imu)--
-# IMU.sigma_g: 1.6968e-04 # NOT USE ?
-# IMU.sigma_wg: 1.9393e-05
-# IMU.sigma_a: 2.0000e-3
-# IMU.sigma_wa: 3.0000e-3
-# --fast-lio(/os1_cloud_node1/imu)--
-IMU.sigma_g: 0.001 # NOT USE ?
-IMU.sigma_wg: 0.0001 
-IMU.sigma_a: 0.01
-IMU.sigma_wa: 0.01 
+# --(/imu/imu)--
+# IMU.sigma_g: 0.5398e-04 # NOT USE ?
+# IMU.sigma_wg: 1.3374e-05
+# IMU.sigma_a: 1.5272e-03
+# IMU.sigma_wa: 0.4800e-03
+
+# --(/os1_cloud_node1/imu)--
+IMU.sigma_g: 2.3980e-04 # NOT USE ?
+IMU.sigma_wg: 6.6660e-05
+IMU.sigma_a: 3.5272e-03
+IMU.sigma_wa: 2.4000e-03
 
 # Gravity
 IMU.nG: 9.81
@@ -176,7 +177,7 @@ Displayer.ShowTrack: 1 # rviz
 Displayer.ShowNewer: 0 # rviz
 
 # Size of point
-Displayer.nLandmarkScale: 0.1 # point size in visualization window
+Displayer.nLandmarkScale: 0.3 # point size in visualization window
 
 # Publishing rate
 Displayer.nLandmarkPubRate: 5
