@@ -5,7 +5,7 @@
     <arg name="config" default="$(find rvio2)/config/rvio2_viral.yaml" />
 
     <arg name="dobag"       default="true" /> <!-- if we should play back the bag -->
-    <arg name="bag"    default="/home/zzwu/Desktop/VIRAL/eee_03/eee_03.bag" />
+    <arg name="bag"    default="/home/zzwu/Desktop/dataset/ntu_viral/eee_03/eee_03.bag" />
     <arg name="bag_start"   default="25" /> 
     <arg name="bag_durr"   default="145" /> 
     <arg name="bag_rate"    default="1" />

@@ -49,19 +49,23 @@ Download and install instructions can be found at: http://opencv.org. **Tested w
   ```
 
 First `git clone` the repository and `catkin_make` it. Especially, `rvio2_mono` is used to run with rosbag in real time, while `rvio2_mono_eval` is used for evaluation purpose which preloads the rosbag and reads it as a txt file. A config file and a launch file are required for running R-VIO2 (for example, `rvio2_euroc.yaml` and `euroc.launch` are for [EuRoC](https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets) dataset). The default mode is VIO, while you can switch to SLAM mode by setting the maximum number of SLAM features to nonzero from the config file (see `rvio2_euroc.yaml`). To visualize the outputs, please use `rviz`.
-#### Start ROS:
+<!-- #### Start ROS:
   ```
   Terminal 1: roscore
   ```
   ```
   Terminal 2: rviz (AND OPEN rvio2_rviz.rviz IN THE CONFIG FOLDER)
-  ```
+  ``` -->
 #### Run `rvio2_mono`:
-  ```
+  <!-- ```
   Terminal 3: rosbag play --pause V1_01_easy.bag (AND SKIP SOME DATA IF NEEDED)
   ```
   ```
   Terminal 4: roslaunch rvio2 euroc.launch
+  ``` -->
+  ```
+  source devel/setup.zsh
+  roslaunch rvio2 viral.launch
   ```
 #### Run `rvio2_mono_eval`:
   ```

@@ -34,9 +34,15 @@ namespace RVIO2
 
 int featId = 0;
 
-CvScalar red = CV_RGB(255,64,64);
-CvScalar blue = CV_RGB(64,64,255);
-CvScalar green = CV_RGB(64,255,64);
+// opencv3
+// CvScalar red = CV_RGB(255,64,64);
+// CvScalar blue = CV_RGB(64,64,255);
+// CvScalar green = CV_RGB(64,255,64);
+
+// opencv4
+cv::Scalar red = CV_RGB(255,64,64);
+cv::Scalar blue = CV_RGB(64,64,255);
+cv::Scalar green = CV_RGB(64,255,64);
 
 
 Tracker::Tracker(const cv::FileStorage& fsSettings)
